@@ -8,7 +8,7 @@ from .serializers import CarListCreateSerializer, CarCreateReadUpdateDeleteSeria
 class CarListCreateView(APIView):
     def post(self, *args, **kwargs):
         data = self.request.data
-        serializer = CarListCreateSerializer(data=data)
+        serializer = CarCreateReadUpdateDeleteSerializer(data=data)
 
         if not serializer.is_valid():
             return Response(serializer.errors)
@@ -28,7 +28,7 @@ class CarCreateReadUpdateDeleteView(APIView):
         try:
             car = CarModel.objects.get(pk=pk)
         except CarModel.DoesNotExist:
-            raise Http404
+            raise Http404()
         serializer = CarCreateReadUpdateDeleteSerializer(car)
         return Response(serializer.data)
 
@@ -37,7 +37,7 @@ class CarCreateReadUpdateDeleteView(APIView):
         try:
             car = CarModel.objects.get(pk=pk)
         except CarModel.DoesNotExist:
-            raise Http404
+            raise Http404()
         data = self.request.data
         serializer = CarCreateReadUpdateDeleteSerializer(car, data=data)
 
@@ -47,7 +47,23 @@ class CarCreateReadUpdateDeleteView(APIView):
         return Response(serializer.data)
 
     def delete(self, *args, **kwargs):
-        return Response("ll")
+        pk = kwargs['pk']
+        try:
+            car = CarModel.objects.get(pk=pk)
+            car.delete()
+        except CarModel.DoesNotExist:
+            raise Http404
+        return Response('Car Deleted')
 
     def patch(self, *args, **kwargs):
-        return Response("o")
+        pk = kwargs['pk']
+        try:
+            car = CarModel.objects.get(pk=pk)
+        except CarModel.DoesNotExist:
+            raise Http404
+        data = self.request.data
+        serializer = CarCreateReadUpdateDeleteSerializer(car, data=data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors)
+        serializer.save()
+        return Response(serializer.data)

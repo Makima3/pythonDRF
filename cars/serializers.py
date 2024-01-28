@@ -8,10 +8,6 @@ class CarListCreateSerializer(serializers.Serializer):
     brand = serializers.CharField(max_length=20)
     year = serializers.IntegerField()
 
-    def create(self, validated_data):
-        car = CarModel.objects.create(**validated_data)
-        return car
-
 
 class CarCreateReadUpdateDeleteSerializer(serializers.Serializer):
 
@@ -21,6 +17,10 @@ class CarCreateReadUpdateDeleteSerializer(serializers.Serializer):
     year = serializers.IntegerField()
     number_of_seats = serializers.IntegerField()
     volume_engine = serializers.FloatField()
+
+    def create(self, validated_data):
+        car = CarModel.objects.create(**validated_data)
+        return car
 
     def update(self, instance, validated_data:dict):
         for k, v in validated_data.items():
