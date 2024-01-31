@@ -10,7 +10,7 @@ def filter_cars(query: QueryDict) -> QuerySet:
     for k, v in query.items():
         match k:
             case 'year__gt':
-                qs = qs.filter(year__gt=v)
+                qs = qs.filter(year__gt=v).order_by('-year').reverse()
             # case 'year__lt':
             #     qs = qs.filter(year__lt=v)
             # case 'year__lte':
