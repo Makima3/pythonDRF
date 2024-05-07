@@ -36,9 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-
-
-
+    'apps.cars',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +74,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'python_drf',
-        'USER': 'root',
-        'PASSWORD': 'rootroot',
+        'USER': 'user',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306'
     }
