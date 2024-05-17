@@ -2,10 +2,11 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 
 from .models import CarModel
 from .serializers import CarModelSerializer
+from apps.cars.managers import CarManager
 
 
 class CarListCreateView(ListCreateAPIView):
-    queryset = CarModel.objects.all()
+    queryset = CarModel.objects.get_audi_only()
     serializer_class = CarModelSerializer
 
 
