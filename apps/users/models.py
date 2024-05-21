@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
-from .managers import UserManager
+from apps.users.managers import UserManager
 
 
 class UsersModel(AbstractBaseUser, PermissionsMixin):
@@ -21,7 +21,8 @@ class UsersModel(AbstractBaseUser, PermissionsMixin):
 class ProfileModel(models.Model):
     class Meta:
         db_table = 'profile'
+
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
     age = models.IntegerField()
-    user = models.OneToOneField(UsersModel, on_delete=models.CASCADE)
+    user = models.OneToOneField(UsersModel, on_delete=models.CASCADE, related_name='profile')
